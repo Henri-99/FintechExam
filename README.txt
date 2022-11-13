@@ -1,4 +1,5 @@
-REMIX DEFAULT WORKSPACE
+# FintechExam
+Question 4 of the FinTech and Cryptocurrencies exam.REMIX DEFAULT WORKSPACE
 
 Remix default workspace is present when:
 i. Remix loads for the very first time 
