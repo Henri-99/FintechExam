@@ -1,0 +1,1 @@
+// 'Bet' tests the Wager smart contract

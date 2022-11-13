@@ -1,0 +1,1 @@
+// 'Payout' tests the Settle smart contract
