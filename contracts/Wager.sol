@@ -42,8 +42,25 @@ contract Wager {
         bets[tokenId].matchID = 123456; //placeholder
         bets[tokenId].teamSelected = 1; //placeholder
         bets[tokenId].odds = 2; //placeholder
-        
-
     }
+
+    function settle() public {
+        //if (bets[tokenId].teamSelected == winner){
+        //  payout = bets[tokenId].wager * bets[tokenId]
+        //  sendWinnings(bettor, payout)
+        //}
+        //else{
+        //  burnToken(tokenId)
+        //}
+    }
+
+    function sendWinnings(address winnerAddress, uint payout) private {
+        // payment here
+    }
+
+    function burnToken(uint tokenId) private {
+        // destroy token with id = tokenId
+    }
+
 
 }
