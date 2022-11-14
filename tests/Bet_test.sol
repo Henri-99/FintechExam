@@ -8,22 +8,12 @@ import "../contracts/Wager.sol";
 
 contract WagerTest {
 
-    bytes32[] proposalNames;
-
     Bet testBet;
-    function beforeAll () public {
-        proposalNames.push(bytes32("candidate1"));
-        ballotToTest = new Ballot(proposalNames);
-    }
 
-    function checkWinningProposal () public {
-        console.log("Running checkWinningProposal");
-        ballotToTest.vote(0);
-        Assert.equal(ballotToTest.winningProposal(), uint(0), "proposal at index 0 should be the winning proposal");
-        Assert.equal(ballotToTest.winnerName(), bytes32("candidate1"), "candidate1 should be the winner name");
-    }
-
-    function checkWinninProposalWithReturnValue () public view returns (bool) {
-        return ballotToTest.winningProposal() == 0;
-    }
+    // make Bet with given bet ID
+    // conclude the match and observe settled bets
+    
+    // check if balance is updated for 2 cases:
+    // case 1: selected winner is match winner
+    // case 2: selected winner is match loser
 }
