@@ -1,59 +1,49 @@
 // SPDX-License-Identifier: GPL-3.0
 pragma solidity >=0.7.0 <0.9.0;
 
-import '@openzeppelin/contracts/token/ERC721/ERC721.sol';
-import '@openzeppelin/contracts/access/Ownable.sol';
 
 /**
  * @title Wager
  * @dev Mint token with encoded bet parameters
  * @custom:dev-run-script ./scripts/deploy_with_ethers.ts
  */
-contract Wager is ERC721, Ownable {
+contract Wager {
+    mapping(address => Bet) public bets; //store details of this bet 
 
-    uint256 number;
+    struct Bet {
+        uint matchID;
+        uint odds;
+        uint wager;
+        uint8 teamSelected;
+    }
 
-    uint team;
-    uint odds;
-    
-    uint256 public wager = 0.05 ether;
-    uint256 public totalSupply;
+    uint256 public totalBets; //counter for bet
+    bool public isBettingEnabled; //disable after match concludes
 
     address public bookmaker;
+    address public bettor;
 
-    constructor() {
-        bookmaker = msg.sender;
+    constructor(){
+        bettor = msg.sender;
     }
 
-    /**
-     * @dev Set team selection at given odds with wager amount x
-     * @param selection is either 0/1 representing Team A or Team B in the bet
-     * @param multiplier is the odds multiplier in the event of a winning bet
-     * @param x is the amount of ETH wagered on the match
-     */
-    function bet(uint selection, uint multiplier, uint x) public {
-        team = selection;
-        odds = multiplier;
-        wager = x;
+    function toggleMatchStatus() public {
+        isBettingEnabled = !isBettingEnabled;
     }
 
-    receive() payable external {
-        wager = msg.value;
+
+    function mint() external payable {
+        require(isBettingEnabled, 'Betting is disabled');
+        require(msg.value >= 1 wei, 'Minimum bet amount is 1 wei');
+        totalBets++;
+        address tokenId = sha256(totalBets); // bet id
+
+        bets[tokenId].wager = msg.value;
+        bets[tokenId].matchID = 123456; //placeholder
+        bets[tokenId].teamSelected = 1; //placeholder
+        bets[tokenId].odds = 2; //placeholder
+        
+
     }
 
-    /**
-     * @dev Store value in variable
-     * @param num value to store
-     */
-    function store(uint256 num) public {
-        number = num;
-    }
-
-    /**
-     * @dev Return value 
-     * @return value of 'number'
-     */
-    function retrieve() public view returns (uint256){
-        return number;
-    }
 }
